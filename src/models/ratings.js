@@ -1,14 +1,32 @@
+'use strict'
 const mongoose = require('mongoose');
 
-const ratingsSchema = mongoose.Schema({
-  userId: { type: String },
-  created: { type: Date, default: Date.now, required: true },
-  date: { type: String, required: true },
-  Restaurant: { type: String, required: true },
-  ratings: { type: Number, required: true },
-  comment: { type: String }
+mongoose.Promise = global.Promise;
+
+const RatingSchema = mongoose.Schema({
+  userId: {
+    type: String,
+    required: true
+  },
+  restId: {
+    type: String,
+    required: true
+  },
+  created: { 
+    type: Date,
+    default: Date.now,
+    required: true 
+  },
+  rating: [{ type: mongoose.Schema.Types.ObjectId, ref: 'Rating' }]
 });
 
-const Ratings = mongoose.model('Ratings', ratingsSchema);
+RatingSchema.methods.serialize = function() {
+  return {
+    id: this._id,
+    // TODO -- Rating data will need to go here
+  };
+};
 
-module.exports = { Ratings };
+const Rating = mongoose.model('Rating', RatingSchema);
+
+module.exports = { Rating };

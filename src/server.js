@@ -5,15 +5,8 @@ const mongoose = require('mongoose');
 const morgan = require('morgan');
 const passport = require('passport');
 
-// Here we use destructuring assignment with renaming so the two variables
-// called router (from ./users and ./auth) have different names
-// For example:
-// const actorSurnames = { james: "Stewart", robert: "De Niro" };
-// const { james: jimmy, robert: bobby } = actorSurnames;
-// console.log(jimmy); // Stewart - the variable name is jimmy, not james
-// console.log(bobby); // De Niro - the variable name is bobby, not robert
-const { userRouter } = require('./routers/user.router');
-const { authRouter, localStrategy, jwtStrategy } = require('./routers/auth.router');
+
+const { userRouter, authRouter, ratingRouter, localStrategy, jwtStrategy } = require('./router/index');
 
 mongoose.Promise = global.Promise;
 
@@ -30,20 +23,21 @@ app.use(function (req, res, next) {
   res.header('Access-Control-Allow-Headers', 'Content-Type,Authorization');
   res.header('Access-Control-Allow-Methods', 'GET,POST,PUT,PATCH,DELETE');
   if (req.method === 'OPTIONS') {
-    return res.send(204);
+    return res.sendStatus(204);
   }
   next();
 });
 
 // Body Parser
-app.use(bodyParser.urlencoded({ extended: false }));
-app.use(bodyParser.json());
+// app.use(bodyParser.urlencoded({ extended: false }));
+// app.use(bodyParser.json());
 
 passport.use(localStrategy);
 passport.use(jwtStrategy);
 
-app.use('/api/users/', usersRouter);
+app.use('/api/users/', userRouter);
 app.use('/api/auth/', authRouter);
+app.use('/api/ratings/', ratingRouter);
 
 const jwtAuth = passport.authenticate('jwt', { session: false });
 
