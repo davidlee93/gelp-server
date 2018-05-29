@@ -1,4 +1,11 @@
- language: node_js
- node_js: node
- services:
-     - mongodb
+language: node_js
+node_js: node
+services:
+- mongodb
+deploy:
+  provider: heroku
+  api_key:
+    secure: rem1X4iBqzTem7RFeucNcgNLdP9TOxlSGr0JiKHMG6YaTXAehfOmgJoH9UUo7pzWXfdzf04Em0MgiwKwOVn3Vv5Ew2VTjWheaVfozF/RI5jHT2zZkNYBaBH15bb0YRHHIQ2VekZB5+IjBOFPW2K6AlGwkSbrwlL5LzzA2sT56zqMKzmxUwNR7h1sid+2ySTpaN3rUCF/oM/TrbAgMyCHomDzYgpC1R3FfV4BItW6crQU494c80SbMU0UrxarOdMEdsxaHuxmR130PNX7o1hSdbKQ0O5q/CBTvbqsdVmlMB4nJdz8jVOWDECKygFPiD8WxAmXvOUS5nXbt5E/S3NP8k/TdVlLQe26aCcd2EP6rEke6xwHtr5/QqU78CLPL/yDR/JJHx2sxD5nEv9FLvKONPwa2TcNufJdMc1mSPF+NVRrMrVbkgritRYQtp5cwzpeRv4qDQS1c5hmRxNz40GlePcn6AbSpPPR2If/tq3PrhghZKS0o2UyqeaIP03GIuTxT3rJ+671qq3WOfO39yt+dxD8O59xa0NQrPIcpKZLYQraI6MjgLwNcQAIYczSvN4Z5Z1pxD5hGwyIeX21+JdJsM6nG1vwJnOVbIzU8T1mnZVtw1BOBxxDek915tvMR7g8gZPqxBRrhGbAE5haKb8k67O/pA+FvT7bSfSNHwiF6Vs=
+  app: gelp-server
+  on:
+    repo: davidlee93/gelp-server
