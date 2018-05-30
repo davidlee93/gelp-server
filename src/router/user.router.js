@@ -106,7 +106,7 @@ userRouter.post("/", jsonParser, (req, res) => {
       if (count > 0) {
         // There is an existing user with the same username
         return Promise.reject({
-          code: 422,
+          code: 409,
           reason: "ValidationError",
           message: "Email already taken",
           location: "email"

@@ -99,12 +99,6 @@ ratingRouter.get("/place/:restId", (req, res) => {
 
 ratingRouter.get("/findings", (req, res) => {
   const places = req.query.places;
-  // return (
-  //   Rating.find({
-  //     restId: {
-  //       $in: places
-  //     }
-  //   })
   return Rating.aggregate([
     {
       $match: {
@@ -126,20 +120,28 @@ ratingRouter.get("/findings", (req, res) => {
     .allowDiskUse(true)
     .exec()
     .then(ratings => {
-      console.log(ratings);
       res.json(ratings.map(rating => rating));
     })
     .catch(err => {
-      console.log(err);
       res.status(500).json({ message: "Internal server error" });
     });
 });
-// });
 
 ratingRouter.get("/user/:userId", (req, res) => {
   return Rating.find({ userId: req.params.userId })
     .then(ratings => {
       res.json(ratings.map(rating => rating.serialize()));
+    })
+    .catch(err => {
+      res.status(500).json({ message: "Internal server error" });
+    });
+});
+
+// USED FOR TESTING
+ratingRouter.get("/", (req, res) => {
+  return Rating.find()
+    .then(ratings => {
+      res.status(200).json({ message: "hit all ratings" });
     })
     .catch(err => {
       res.status(500).json({ message: "Internal server error" });
