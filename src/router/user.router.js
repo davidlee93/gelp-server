@@ -41,13 +41,6 @@ userRouter.post("/", jsonParser, (req, res) => {
     });
   }
 
-  // If the username and password aren't trimmed we give an error.  Users might
-  // expect that these will work without trimming (i.e. they want the password
-  // "foobar ", including the space at the end).  We need to reject such values
-  // explicitly so the users know what's happening, rather than silently
-  // trimming them and expecting the user to understand.
-  // We'll silently trim the other fields, because they aren't credentials used
-  // to log in, so it's less of a problem.
   const explicityTrimmedFields = ["firstname", "lastname", "email", "password"];
   const nonTrimmedField = explicityTrimmedFields.find(
     field => req.body[field].trim() !== req.body[field]
@@ -96,8 +89,7 @@ userRouter.post("/", jsonParser, (req, res) => {
   }
 
   let { email, password, firstname = "", lastname = "", zipcode } = req.body;
-  // Username and password come in pre-trimmed, otherwise we throw an error
-  // before this
+
   const firstName = firstname.trim();
   const lastName = lastname.trim();
   return User.find({ email })
@@ -138,22 +130,11 @@ userRouter.post("/", jsonParser, (req, res) => {
     });
 });
 
-// Never expose all your users like below in a prod application
-// we're just doing this so we have a quick way to see
-// if we're creating users. keep in mind, you can also
-// verify this in the Mongo shell.
-
-//???????? below ????????
+// Future user pages
 // userRouter.get('/', (req, res) => {
 //   return User.find(req.body.id)
 //     .then(users => res.json(users.map(user => user.serialize())))
 //     .catch(err => res.status(500).json({message: 'Internal server error'}));
 // });
-
-// ratingRouter.get('/rating/:restId', (r,r) => {
-//   return Rating.where(restId === req.body.id) {
-
-//   }
-// })
 
 module.exports = { userRouter };

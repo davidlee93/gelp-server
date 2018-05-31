@@ -33,10 +33,6 @@ app.use(function(req, res, next) {
   next();
 });
 
-// Body Parser
-// app.use(bodyParser.urlencoded({ extended: false }));
-// app.use(bodyParser.json());
-
 passport.use(localStrategy);
 passport.use(jwtStrategy);
 
@@ -45,13 +41,6 @@ app.use("/api/auth/", authRouter);
 app.use("/api/ratings/", ratingRouter);
 
 const jwtAuth = passport.authenticate("jwt", { session: false });
-
-// A protected endpoint which needs a valid JWT to access it
-// app.get('/api/protected', jwtAuth, (req, res) => {
-//   return res.json({
-//     data: 'rosebud'
-//   });
-// });
 
 app.use("*", (req, res) => {
   return res.status(404).json({ message: "Not Found" });
