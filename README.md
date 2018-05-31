@@ -47,4 +47,5 @@ Place Page:
 ![Place Page screenshot](https://github.com/davidlee93/gelp-client/blob/master/public/place-page.png)
 
 Rate Page:
+<br />
 ![Rate Page: screenshot](https://github.com/davidlee93/gelp-client/blob/master/public/Rate%20Page.png)
